@@ -1,34 +1,38 @@
 import random
+from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.button import Button
+from kivy.uix.label import Label
 
-def afficher_couplets():
+
+class HeyJudeApp(App):
     couplets = [
         "Make it better",
         "Take a sad song and make it better",
         "Remember to let her into your heart",
         "Then you can start to make it better"
     ]
-    
-    random.shuffle(couplets)  # Randomise l'ordre des couplets
-    
-    print("Hey Jude")
-    
-    for couplet in couplets:
-        print(couplet)
-    
-    print("Better better better better better waaaaaa")
 
-def demander_recommencer():
-    while True:
-        reponse = input("Voulez-vous réécouter 'Hey Jude' ? (Oui/Non) ")
-        if reponse.lower() == "oui":
-            return True
-        elif reponse.lower() == "non":
-            return False
-        else:
-            print("Veuillez répondre par 'Oui' ou 'Non'.")
+    def build(self):
+        layout = BoxLayout(orientation='vertical')
+        self.title = "Hey Jude"
 
-recommencer = True
+        label = Label(text=self.title, font_size='30sp', size_hint=(1, 0.2))
+        layout.add_widget(label)
 
-while recommencer:
-    afficher_couplets()
-    recommencer = demander_recommencer()
+        button = Button(text="Afficher les couplets", font_size='20sp', size_hint=(1, 0.2))
+        button.bind(on_release=self.afficher_couplets)
+        layout.add_widget(button)
+
+        self.couplets_label = Label(text="", font_size='20sp', size_hint=(1, 0.6))
+        layout.add_widget(self.couplets_label)
+
+        return layout
+
+    def afficher_couplets(self, *args):
+        random.shuffle(self.couplets)
+        couplets_text = "\n".join(self.couplets)
+        self.couplets_label.text = couplets_text + "\nBetter better better better better waaaaaa"
+
+if __name__ == '__main__':
+    HeyJudeApp().run()
