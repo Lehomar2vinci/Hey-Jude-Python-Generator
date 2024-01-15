@@ -1,3 +1,5 @@
+# Do first command, before, run  "pip install kivy" if Python is installed on your machine ! 
+
 import random
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
